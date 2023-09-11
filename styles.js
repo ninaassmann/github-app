@@ -22,6 +22,17 @@ export default createGlobalStyle`
     padding: 4rem 0;
   }
 
+  h3 {
+    margin-bottom: 1rem;
+  }
+
+  small {
+    opacity: 0.5;
+    font-weight: lighter;
+  }
+
+  a {text-decoration: none; color: #fff}
+
   header {
     display: flex;
     flex-direction: column;
@@ -42,7 +53,7 @@ export default createGlobalStyle`
     gap: 0.5rem;
   }
 
-  section {
+  article {
     background: #769FB6;
     color: #fff;
     padding: 1rem;
@@ -51,4 +62,19 @@ export default createGlobalStyle`
     flex-direction: column;
     gap: 1rem;
   }
+
+  section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  ul {
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  dt {font-weight: 700; margin-bottom: 0.5rem;}
 `;

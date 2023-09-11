@@ -28,9 +28,12 @@ export default function HomePage() {
           />
           <Button>Check User</Button>
         </form>
-        <section>
-          <p>{username}</p>
-        </section>
+        {username && (
+          <section>
+            <h2>Profile Information</h2>
+            <p>{username}</p>
+          </section>
+        )}
       </main>
     </>
   );

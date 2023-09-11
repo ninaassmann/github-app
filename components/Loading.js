@@ -1,7 +1,7 @@
 import Button from "./Button.styled";
 import Input from "./Input.styled";
 
-export default function Loading({ handleSubmit }) {
+export default function Loading({ handleSubmit, text }) {
   return (
     <main>
       <header>
@@ -18,7 +18,7 @@ export default function Loading({ handleSubmit }) {
         <Button>Check User</Button>
       </form>
       <article>
-        <h3>Please enter a valid username</h3>
+        <h3>{text}</h3>
       </article>
     </main>
   );

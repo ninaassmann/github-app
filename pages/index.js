@@ -19,8 +19,8 @@ export default function HomePage() {
     `https://api.github.com/users/${username}`
   );
 
-  if (error || reposError) return <Loading />;
-  if (isLoading || reposLoading) return <Loading />;
+  if (error || reposError) return <Loading text="Failed to load." />;
+  if (isLoading || reposLoading) return <Loading text="Loading..." />;
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -72,7 +72,7 @@ export default function HomePage() {
                       <h4>Repositories</h4>
                       {repos.map((repo) => (
                         <ListItem key={repo.id}>
-                          <Link href={repo.html_url}>
+                          <Link href={repo.html_url} target="_blank">
                             <dl>
                               <dt>{repo.name}</dt>
                               <dd>{repo.description}</dd>

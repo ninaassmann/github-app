@@ -22,6 +22,8 @@ export default createGlobalStyle`
     padding: 4rem 0;
   }
 
+  ::-webkit-scrollbar {display: none;}
+
   h3 {
     margin-bottom: 1rem;
   }

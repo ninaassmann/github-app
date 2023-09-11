@@ -1,8 +1,26 @@
+import Button from "@/components/Button.styled";
+import Input from "@/components/Input.styled";
+import Loading from "@/components/Loading";
+import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 import styled from "styled-components";
+import useSWR from "swr";
 
 export default function HomePage() {
-  const [username, setUsername] = useState();
+  const [username, setUsername] = useState("ninaassmann");
+  const {
+    data: repos,
+    isLoading: reposLoading,
+    error: reposError,
+  } = useSWR(`https://api.github.com/users/${username}/repos`);
+
+  const { data, isLoading, error } = useSWR(
+    `https://api.github.com/users/${username}`
+  );
+
+  if (error || reposError) return <Loading text="Failed to load." />;
+  if (isLoading || reposLoading) return <Loading text="Loading..." />;
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -29,28 +47,74 @@ export default function HomePage() {
           <Button>Check User</Button>
         </form>
         {username && (
-          <section>
-            <h2>Profile Information</h2>
-            <p>{username}</p>
-          </section>
+          <article>
+            {data.name ? (
+              <section>
+                <Header>
+                  <Image
+                    src={data.avatar_url}
+                    alt={data.name}
+                    width={100}
+                    height={100}
+                  />
+                  <div>
+                    <h3>
+                      {data.name} <br />
+                      <small>{username}</small>
+                    </h3>
+
+                    <p>Public Repositories: {data.public_repos}</p>
+                  </div>
+                </Header>
+                <ul>
+                  {repos && (
+                    <>
+                      <h4>Repositories</h4>
+                      {repos.map((repo) => (
+                        <ListItem key={repo.id}>
+                          <Link href={repo.html_url} target="_blank">
+                            <dl>
+                              <dt>{repo.name}</dt>
+                              <dd>{repo.description}</dd>
+                            </dl>
+                          </Link>
+                        </ListItem>
+                      ))}
+                    </>
+                  )}
+                </ul>
+              </section>
+            ) : (
+              <h3>Please enter a valid username</h3>
+            )}
+          </article>
         )}
       </main>
     </>
   );
 }
 
-const Input = styled.input`
-  padding: 1rem;
-  border: none;
-  border-radius: 0.5rem;
+const Header = styled.header`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+
+  & img {
+    border-radius: 0.5rem;
+  }
 `;
 
-const Button = styled.button`
-  padding: 1rem;
-  border: none;
-  border-radius: 0.5rem;
-  background: #188fa7;
-  color: #fff;
-  text-transform: uppercase;
-  letter-spacing: 1px;
+const ListItem = styled.li`
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  background: #769fb6;
+
+  &:nth-last-of-type(even) {
+    background: #6b828f;
+  }
+
+  &:hover {
+    filter: brightness(0.95);
+  }
 `;
